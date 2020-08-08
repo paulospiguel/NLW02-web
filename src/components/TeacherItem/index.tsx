@@ -2,38 +2,51 @@ import React from "react";
 import whatsappIcon from "../../assets/images/icons/whatsapp.svg";
 
 import "./styles.css";
+import Button from "../Button";
 
-const TeacherItem: React.FC = () => {
+export interface ItemInterface {
+  avatar: string;
+  bio: string;
+  cost: number;
+  id: number;
+  name: string;
+  subject: string;
+  whatsapp: string;
+}
+
+interface TeacherItemProps {
+  item: ItemInterface;
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ item }) => {
+  const { avatar, bio, cost, name, subject, whatsapp } = item;
+
+  function handleWhatsapp(value: string) {
+    window.location.href = `https://wa.me/${value}>`;
+  }
+
   return (
     <article className="teacher-item">
       <header>
-        <img
-          src="https://avatars3.githubusercontent.com/u/41386612?s=60&v=4"
-          alt=""
-        />
+        <img src={avatar} alt="Avatar do usuário" />
         <div>
-          <strong>Paulo Spiguel</strong>
-          <span>Química</span>
+          <strong>{name}</strong>
+          <span>{subject}</span>
         </div>
       </header>
 
-      <p>
-        Entusiasta das melhores tecnologias de quimica avançada.
-        <br /> <br />
-        Apaixonado por explodir coisas em laboratório e por mudar a vida das
-        pessoas através de experiências.
-      </p>
+      <p>{bio}</p>
 
       <footer>
         <p>
           Preço/hora
-          <strong>R$ 80,00</strong>
+          <strong>R$ {cost}</strong>
         </p>
 
-        <button type="button">
+        <Button type="button" onClick={() => handleWhatsapp(whatsapp)}>
           <img src={whatsappIcon} alt="Whatsapp" />
           Entrar em contato
-        </button>
+        </Button>
       </footer>
     </article>
   );
