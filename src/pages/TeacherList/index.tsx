@@ -4,7 +4,7 @@ import api from "../../services/api";
 import PageHeader from "../../components/PageHeader";
 
 import "./styles.css";
-import TeacherItem, { ItemInterface } from "../../components/TeacherItem";
+import TeacherItem, { Teacher } from "../../components/TeacherItem";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import Button from "../../components/Button";
@@ -74,8 +74,8 @@ const TeacherList: React.FC = () => {
       </PageHeader>
 
       <main>
-        {teachers.map((teacher: ItemInterface) => (
-          <TeacherItem item={teacher} key={teacher.id} />
+        {teachers.map((teacher: Teacher) => (
+          <TeacherItem teacher={teacher} key={teacher.id} />
         ))}
       </main>
     </div>

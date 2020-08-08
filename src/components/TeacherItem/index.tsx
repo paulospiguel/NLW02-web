@@ -3,8 +3,9 @@ import whatsappIcon from "../../assets/images/icons/whatsapp.svg";
 
 import "./styles.css";
 import Button from "../Button";
+import api from "../../services/api";
 
-export interface ItemInterface {
+export interface Teacher {
   avatar: string;
   bio: string;
   cost: number;
@@ -15,35 +16,36 @@ export interface ItemInterface {
 }
 
 interface TeacherItemProps {
-  item: ItemInterface;
+  teacher: Teacher;
 }
 
-const TeacherItem: React.FC<TeacherItemProps> = ({ item }) => {
-  const { avatar, bio, cost, name, subject, whatsapp } = item;
-
-  function handleWhatsapp(value: string) {
-    window.location.href = `https://wa.me/${value}>`;
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  function handleWhatsapp(whatsappNumber: string) {
+    api.post("connections", {
+      user_id: teacher.id,
+    });
+    window.open(`https://wa.me/${whatsappNumber}`, "_blank");
   }
 
   return (
     <article className="teacher-item">
       <header>
-        <img src={avatar} alt="Avatar do usuário" />
+        <img src={teacher.avatar} alt="Avatar do usuário" />
         <div>
-          <strong>{name}</strong>
-          <span>{subject}</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </header>
 
-      <p>{bio}</p>
+      <p>{teacher.bio}</p>
 
       <footer>
         <p>
           Preço/hora
-          <strong>R$ {cost}</strong>
+          <strong>R$ {teacher.cost}</strong>
         </p>
 
-        <Button type="button" onClick={() => handleWhatsapp(whatsapp)}>
+        <Button type="button" onClick={() => handleWhatsapp(teacher.whatsapp)}>
           <img src={whatsappIcon} alt="Whatsapp" />
           Entrar em contato
         </Button>
